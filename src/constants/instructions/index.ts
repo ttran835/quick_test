@@ -29,7 +29,7 @@ const instructions = [
     label: challenge3,
   },
   {
-    title: '4. Update the footer position',
+    title: '4. Update the footer position \u2713',
     label: challenge4,
   },
   {
