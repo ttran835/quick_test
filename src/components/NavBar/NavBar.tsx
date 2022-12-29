@@ -9,14 +9,14 @@ type TNavBar = {
   }[];
 };
 
+const activeLinkStyle = {
+  fontWeight: 700,
+  textDecoration: 'underline',
+};
+
 function NavBar({ links }: TNavBar) {
   const { pathname } = useLocation();
   const [currentLink, setCurrentLink] = useState(pathname);
-
-  const activeLinkStyle = {
-    fontWeight: 700,
-    textDecoration: 'underline',
-  };
 
   return (
     <Box
