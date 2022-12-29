@@ -1,5 +1,5 @@
 import { Link, Box } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 type TNavBar = {
   links: {

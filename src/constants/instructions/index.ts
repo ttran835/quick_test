@@ -17,7 +17,7 @@ const instructions = [
     label: welcome,
   },
   {
-    title: '1. Update NavBar link behavior',
+    title: '1. Update NavBar link behavior \u2713',
     label: challenge1,
   },
   {
