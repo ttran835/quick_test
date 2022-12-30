@@ -33,7 +33,7 @@ const instructions = [
     label: challenge4,
   },
   {
-    title: '5. Integrate with the backend API',
+    title: '5. Integrate with the backend API \u2713',
     label: challenge5,
   },
   {

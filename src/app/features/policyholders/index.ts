@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export interface PolicyHoldersState {
-  values: string[];
-  status: 'idle' | 'loading' | 'failed';
-}
+import { POLICYHOLDERS_API } from '../../../constants/apiLinks';
+import { PolicyHoldersState } from './interfaces';
 
 const initialState: PolicyHoldersState = {
   values: [],
@@ -14,8 +12,8 @@ const initialState: PolicyHoldersState = {
 export const getPolicyholders = createAsyncThunk(
   'policyholders/fetchInfo',
   async () => {
-    const response = await axios.get('/api/test');
-    return response.data;
+    const response = await axios.get(`${POLICYHOLDERS_API}/policyholders`);
+    return response.data.policyHolders;
   }
 );
 
