@@ -23,6 +23,6 @@ export interface Policyholder {
 }
 
 export interface PolicyHoldersState {
-  values: Policyholder[];
+  // values: Policyholder[];
   status: 'idle' | 'loading' | 'failed';
 }

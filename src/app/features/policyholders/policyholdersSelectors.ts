@@ -1,5 +1,6 @@
-import { createSelector } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { createSelector, nanoid } from '@reduxjs/toolkit';
+import { policyholdersAdapter } from '.';
+import { RootState, store } from '../../store';
 import { Policyholder, PolicyholderAddress, PolicyKeys } from './interfaces';
 
 function convertAddressToString(address: PolicyholderAddress): string {
@@ -35,11 +36,15 @@ function transformRowValue(policyholder: Policyholder): {
   return result;
 }
 
-export const selectAllPolicyholders = (state: RootState) =>
-  state.policyHolders.values;
+const policyholdersSelectors = policyholdersAdapter.getSelectors<RootState>(
+  (state) => state.policyholders
+);
 
-export const selectAllPolicyholderRowValues = createSelector(
-  selectAllPolicyholders,
-  (policyholders) =>
-    policyholders.map((policyholder) => transformRowValue(policyholder))
+export const selectAllTransformedPolicyholders = createSelector(
+  policyholdersSelectors.selectEntities,
+  (policyholdersEntites) =>
+    Object.keys(policyholdersEntites).map((entityId) => ({
+      entityId,
+      value: transformRowValue(policyholdersEntites[entityId] as Policyholder),
+    }))
 );

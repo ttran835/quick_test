@@ -3,7 +3,7 @@ import policyholdersReducer from './features/policyholders';
 
 export const store = configureStore({
   reducer: {
-    policyHolders: policyholdersReducer,
+    policyholders: policyholdersReducer,
   },
 });
 

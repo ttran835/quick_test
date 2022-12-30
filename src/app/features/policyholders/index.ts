@@ -1,13 +1,21 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createEntityAdapter,
+  createSlice,
+  nanoid,
+} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { POLICYHOLDERS_API } from '../../../constants/apiLinks';
-import { PolicyHoldersState } from './interfaces';
+import { Policyholder, PolicyHoldersState } from './interfaces';
 
 const initialState: PolicyHoldersState = {
-  values: [],
   status: 'idle',
 };
+
+export const policyholdersAdapter = createEntityAdapter<Policyholder>({
+  selectId: () => nanoid(),
+});
 
 export const getPolicyholders = createAsyncThunk(
   'policyholders/fetchInfo',
@@ -19,7 +27,7 @@ export const getPolicyholders = createAsyncThunk(
 
 export const policyholdersSlice = createSlice({
   name: 'policyholders',
-  initialState,
+  initialState: policyholdersAdapter.getInitialState(initialState),
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {},
   // The `extraReducers` field lets the slice handle actions defined elsewhere,
@@ -29,7 +37,7 @@ export const policyholdersSlice = createSlice({
       state.status = 'idle';
 
       if (action.payload) {
-        state.values = action.payload;
+        policyholdersAdapter.setAll(state, action.payload);
       }
     });
   },
