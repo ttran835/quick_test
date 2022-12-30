@@ -7,6 +7,8 @@ import {
 import { selectAllTransformedPolicyholders } from '../../app/features/policyholders/policyholdersSelectors';
 import { Box, Button, Typography } from '@mui/material';
 import InfoTable from '../../components/InfoTable';
+import { mockedPostPayloads } from './mockedPostPayloads';
+import { Policyholder } from '../../app/features/policyholders/interfaces';
 
 function PolicyHoldersView() {
   const dispatch = useAppDispatch();
@@ -18,8 +20,8 @@ function PolicyHoldersView() {
     }
   }, [dispatch, allPolicyholders]);
 
-  const _handleCreateNewPolicyHolder = () => {
-    dispatch(createPolicyholder());
+  const _handleCreateNewPolicyHolder = (payload: Policyholder) => {
+    dispatch(createPolicyholder(payload));
   };
 
   return (
@@ -36,13 +38,31 @@ function PolicyHoldersView() {
           />
         ))}
       <Button
-        onClick={_handleCreateNewPolicyHolder}
+        onClick={() => _handleCreateNewPolicyHolder(mockedPostPayloads[0])}
         sx={{ margin: 'auto' }}
         variant="contained"
         color="warning"
         size="large"
       >
         Add Policyholder
+      </Button>
+      <Button
+        onClick={() => _handleCreateNewPolicyHolder(mockedPostPayloads[1])}
+        sx={{ margin: 'auto' }}
+        variant="contained"
+        color="warning"
+        size="large"
+      >
+        Add Another Policyholder
+      </Button>
+      <Button
+        onClick={() => _handleCreateNewPolicyHolder(mockedPostPayloads[1])}
+        sx={{ margin: 'auto' }}
+        variant="contained"
+        color="warning"
+        size="large"
+      >
+        Add Another Policyholder
       </Button>
     </Box>
   );

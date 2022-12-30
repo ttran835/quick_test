@@ -8,7 +8,6 @@ import axios from 'axios';
 
 import { POLICYHOLDERS_API } from '../../../constants/apiLinks';
 import { Policyholder } from './interfaces';
-import { mockedPostPayloads } from './mockedPostPayloads';
 
 const initialState: { status: 'idle' | 'loading' | 'failed' } = {
   status: 'idle',
@@ -29,10 +28,10 @@ export const getPolicyholders = createAsyncThunk(
 
 export const createPolicyholder = createAsyncThunk(
   'policyholders/postPolicyholder',
-  async () => {
+  async (payload: Policyholder) => {
     const response = await axios.post(
       `${POLICYHOLDERS_API}/policyholders`,
-      mockedPostPayloads[1]
+      payload
     );
 
     return response.data.policyHolders;
@@ -67,7 +66,7 @@ export const policyholdersSlice = createSlice({
       state.status = 'idle';
 
       if (action.payload) {
-        policyholdersAdapter.setAll(state, action.payload);
+        policyholdersAdapter.upsertMany(state, action.payload);
       }
     });
   },

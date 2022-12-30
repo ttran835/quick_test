@@ -5,7 +5,6 @@ import { Policyholder, PolicyholderAddress } from './interfaces';
 
 function convertAddressToString(address: PolicyholderAddress): string {
   const { line1, line2, city, state, postalCode } = address;
-
   return `${line1}, ${line2}, ${city}, ${state}, ${postalCode}`;
 }
 
