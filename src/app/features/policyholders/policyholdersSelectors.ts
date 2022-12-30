@@ -1,39 +1,27 @@
-import { createSelector, nanoid } from '@reduxjs/toolkit';
+import { createSelector } from '@reduxjs/toolkit';
 import { policyholdersAdapter } from '.';
-import { RootState, store } from '../../store';
-import { Policyholder, PolicyholderAddress, PolicyKeys } from './interfaces';
+import { RootState } from '../../store';
+import { Policyholder, PolicyholderAddress } from './interfaces';
 
 function convertAddressToString(address: PolicyholderAddress): string {
-  const result = Object.keys(address).map((key: string) => {
-    const value = address[key as keyof PolicyholderAddress];
-    return value;
-  });
+  const { line1, line2, city, state, postalCode } = address;
 
-  return result.join(', ');
+  return `${line1}, ${line2}, ${city}, ${state}, ${postalCode}`;
 }
 
 function transformRowValue(policyholder: Policyholder): {
   key: string;
   value: string | number;
 }[] {
-  const result = Object.keys(policyholder).map((key: string) => {
-    let value = policyholder[key as keyof Policyholder];
+  const { name, age, address, phoneNumber, isPrimary } = policyholder;
 
-    if (key === 'address') {
-      value = convertAddressToString(value as PolicyholderAddress);
-    }
-
-    if (key === 'isPrimary') {
-      value = value ? 'Primary' : 'Non-Primary';
-    }
-
-    return {
-      key: PolicyKeys[key as keyof typeof PolicyKeys],
-      value: value as string | number,
-    };
-  });
-
-  return result;
+  return [
+    { key: 'Name', value: name },
+    { key: 'Age', value: age },
+    { key: 'address', value: convertAddressToString(address) },
+    { key: 'Phone Number', value: phoneNumber },
+    { key: 'Authorization', value: isPrimary ? 'Primary' : 'Non-Primary' },
+  ];
 }
 
 const policyholdersSelectors = policyholdersAdapter.getSelectors<RootState>(

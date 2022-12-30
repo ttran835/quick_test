@@ -1,11 +1,3 @@
-export enum PolicyKeys {
-  name = 'Name',
-  age = 'Age',
-  phoneNumber = 'Phone Number',
-  address = 'Address',
-  isPrimary = 'Authorization',
-}
-
 export interface PolicyholderAddress {
   line1: string;
   line2: string;

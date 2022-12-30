@@ -10,12 +10,13 @@ import InfoTable from '../../components/InfoTable';
 
 function PolicyHoldersView() {
   const dispatch = useAppDispatch();
+  const allPolicyholders = useAppSelector(selectAllTransformedPolicyholders);
 
   useEffect(() => {
-    dispatch(getPolicyholders());
-  }, []);
-
-  const allPolicyholders = useAppSelector(selectAllTransformedPolicyholders);
+    if (allPolicyholders.length < 1) {
+      dispatch(getPolicyholders());
+    }
+  }, [dispatch, allPolicyholders]);
 
   const _handleCreateNewPolicyHolder = () => {
     dispatch(createPolicyholder());
