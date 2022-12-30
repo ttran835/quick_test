@@ -21,8 +21,3 @@ export interface Policyholder {
   phoneNumber: string;
   isPrimary: boolean;
 }
-
-export interface PolicyHoldersState {
-  // values: Policyholder[];
-  status: 'idle' | 'loading' | 'failed';
-}

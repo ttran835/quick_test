@@ -37,15 +37,16 @@ const instructions = [
     label: challenge5,
   },
   {
-    title: '6. Render the results of the first GET request',
+    title: '6. Render the results of the first GET request \u2713',
     label: challenge6,
   },
   {
-    title: '7. Add a feature to create a policyholder',
+    title: '7. Add a feature to create a policyholder \u2713',
+
     label: challenge7,
   },
   {
-    title: '8. Render the results of the second API request',
+    title: '8. Render the results of the second API request \u2713',
     label: challenge8,
   },
   {
