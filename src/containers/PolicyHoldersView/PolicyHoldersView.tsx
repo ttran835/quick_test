@@ -55,15 +55,6 @@ function PolicyHoldersView() {
       >
         Add Another Policyholder
       </Button>
-      <Button
-        onClick={() => _handleCreateNewPolicyHolder(mockedPostPayloads[1])}
-        sx={{ margin: 'auto' }}
-        variant="contained"
-        color="warning"
-        size="large"
-      >
-        Add Another Policyholder
-      </Button>
     </Box>
   );
 }

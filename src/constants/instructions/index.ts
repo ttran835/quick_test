@@ -21,11 +21,11 @@ const instructions = [
     label: challenge1,
   },
   {
-    title: '2. Add a unit test',
+    title: '2. Add a unit test \u2713',
     label: challenge2,
   },
   {
-    title: '3. Add another unit test',
+    title: '3. Add another unit test \u2713',
     label: challenge3,
   },
   {
