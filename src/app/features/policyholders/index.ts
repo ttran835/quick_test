@@ -2,7 +2,6 @@ import {
   createAsyncThunk,
   createEntityAdapter,
   createSlice,
-  nanoid,
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -13,9 +12,17 @@ const initialState: { status: 'idle' | 'loading' | 'failed' } = {
   status: 'idle',
 };
 
-// Uitlized nanoid since object in response data does not provide uniqueId
+/**
+ * Uitlized name and phonenumber since object in response
+ * data does not provide uniqueId
+ * In real production, we would use UUID or another uniqueId instead
+ */
 export const policyholdersAdapter = createEntityAdapter<Policyholder>({
-  selectId: () => nanoid(),
+  selectId: (policyholder) => {
+    const { name, phoneNumber } = policyholder;
+    const uniqueId = `${name}-${phoneNumber}`;
+    return uniqueId;
+  },
 });
 
 export const getPolicyholders = createAsyncThunk(
@@ -65,8 +72,13 @@ export const policyholdersSlice = createSlice({
     builder.addCase(createPolicyholder.fulfilled, (state, action) => {
       state.status = 'idle';
 
+      /**
+       * This is not ideal since in prod
+       * Implemented this way since we know that index 1
+       * will always be the newly added policyholder
+       */
       if (action.payload) {
-        policyholdersAdapter.upsertMany(state, action.payload);
+        policyholdersAdapter.upsertOne(state, action.payload[1]);
       }
     });
   },
