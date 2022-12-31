@@ -15,7 +15,7 @@ function PolicyHoldersView() {
   const allPolicyholders = useAppSelector(selectAllTransformedPolicyholders);
 
   useEffect(() => {
-    if (allPolicyholders.length < 1) {
+    if (allPolicyholders?.length < 1) {
       dispatch(getPolicyholders());
     }
   }, [dispatch, allPolicyholders]);
@@ -29,14 +29,20 @@ function PolicyHoldersView() {
       <Typography variant="h2" textAlign="center" marginBottom="24px">
         Policyholders
       </Typography>
-      {allPolicyholders.length > 0 &&
-        allPolicyholders.map((policyholder) => (
-          <InfoTable
-            header="Contact Information"
-            rows={policyholder.value}
-            key={policyholder.entityId}
-          />
-        ))}
+      <Box
+        flexDirection="column"
+        sx={{ display: 'flex', rowGap: '25px' }}
+        data-testid="policyholdersTable"
+      >
+        {allPolicyholders?.length > 0 &&
+          allPolicyholders.map((policyholder) => (
+            <InfoTable
+              header="Contact Information"
+              rows={policyholder.value}
+              key={policyholder.entityId}
+            />
+          ))}
+      </Box>
       <Button
         onClick={() => _handleCreateNewPolicyHolder(mockedPostPayloads[0])}
         sx={{ margin: 'auto' }}

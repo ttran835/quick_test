@@ -17,7 +17,7 @@ function transformRowValue(policyholder: Policyholder): {
   return [
     { key: 'Name', value: name },
     { key: 'Age', value: age },
-    { key: 'address', value: convertAddressToString(address) },
+    { key: 'Address', value: convertAddressToString(address) },
     { key: 'Phone Number', value: phoneNumber },
     { key: 'Authorization', value: isPrimary ? 'Primary' : 'Non-Primary' },
   ];
