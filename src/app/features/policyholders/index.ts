@@ -5,7 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-import { POLICYHOLDERS_API } from '../../../constants/apiLinks';
+import { SURE_API } from '../../../constants/apiLinks';
 import { Policyholder } from './interfaces';
 
 const initialState: { status: 'idle' | 'loading' | 'failed' } = {
@@ -28,16 +28,16 @@ export const policyholdersAdapter = createEntityAdapter<Policyholder>({
 export const getPolicyholders = createAsyncThunk(
   'policyholders/getPolicyholders',
   async () => {
-    const response = await axios.get(`${POLICYHOLDERS_API}/policyholders`);
+    const response = await axios.get(`${SURE_API}/policyholders`);
     return response.data.policyHolders;
   }
 );
 
 export const createPolicyholder = createAsyncThunk(
-  'policyholders/postPolicyholder',
+  'policyholders/createPolicyholder',
   async (payload: Policyholder) => {
     const response = await axios.post(
-      `${POLICYHOLDERS_API}/policyholders`,
+      `${SURE_API}/policyholders`,
       payload
     );
 
