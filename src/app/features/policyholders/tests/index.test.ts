@@ -13,6 +13,8 @@ describe('policyholders redux store', () => {
       entities: {},
       ids: [],
       status: 'idle',
+      hasError: false,
+      errorMessage: '',
     });
   });
 
