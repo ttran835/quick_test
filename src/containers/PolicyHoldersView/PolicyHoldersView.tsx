@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   createPolicyholder,
   getPolicyholders,
 } from '../../app/features/policyholders';
 import { selectAllTransformedPolicyholders } from '../../app/features/policyholders/policyholdersSelectors';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Typography } from '@mui/material';
 import InfoTable from '../../components/InfoTable';
 import { mockedPostPayloads } from './mockedPostPayloads';
 import { Policyholder } from '../../app/features/policyholders/interfaces';
+import { development, features } from './markdown';
 
 function PolicyHoldersView() {
   const dispatch = useAppDispatch();
@@ -43,24 +45,25 @@ function PolicyHoldersView() {
             />
           ))}
       </Box>
-      <Button
-        onClick={() => _handleCreateNewPolicyHolder(mockedPostPayloads[0])}
-        sx={{ margin: 'auto' }}
-        variant="contained"
-        color="warning"
-        size="large"
-      >
-        Add Policyholder
-      </Button>
-      <Button
-        onClick={() => _handleCreateNewPolicyHolder(mockedPostPayloads[1])}
-        sx={{ margin: 'auto' }}
-        variant="contained"
-        color="warning"
-        size="large"
-      >
-        Add Another Policyholder
-      </Button>
+      <ButtonGroup variant="contained" color="warning" sx={{ margin: 'auto' }}>
+        <Button
+          onClick={() => _handleCreateNewPolicyHolder(mockedPostPayloads[0])}
+        >
+          Add Policyholder
+        </Button>
+        <Button
+          onClick={() => _handleCreateNewPolicyHolder(mockedPostPayloads[1])}
+        >
+          Add Another Policyholder
+        </Button>
+      </ButtonGroup>
+      <Box textAlign="left" marginTop={2}>
+        <Typography fontSize={18} fontWeight={600}>
+          Remaning work
+        </Typography>
+        <ReactMarkdown>{features}</ReactMarkdown>
+        <ReactMarkdown>{development}</ReactMarkdown>
+      </Box>
     </Box>
   );
 }
