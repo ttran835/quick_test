@@ -1,9 +1,14 @@
 export const ctaSummary = `
   ### Summary of CTA's
 
-  The three buttons above mimics user form submit. Based on the requirement, I did not include a form
+  The three buttons above mimics user form submit. 
+  
+  Based on the requirement, I did not include a form
   for user to fill. When clicked, they will append a new and unique user to our redux state, rendering a
-  new table in the process. Subsequent clicks should not add duplicate users. 
+  new table in the process. 
+  
+  Subsequent clicks should not add duplicate users.
+
   I include a third button to return a 400 on purpose, with missing "age" field, mimicking 
   when user misses a field (server-side verification).
 `;
