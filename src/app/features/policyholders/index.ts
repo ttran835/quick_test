@@ -3,13 +3,19 @@ import {
   createEntityAdapter,
   createSlice,
 } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { SURE_API } from '../../../constants/apiLinks';
 import { Policyholder } from './interfaces';
 
-const initialState: { status: 'idle' | 'loading' | 'failed' } = {
+const initialState: {
+  status: 'idle' | 'loading' | 'failed';
+  hasError: boolean;
+  errorMessage: string;
+} = {
   status: 'idle',
+  hasError: false,
+  errorMessage: '',
 };
 
 /**
@@ -28,20 +34,26 @@ export const policyholdersAdapter = createEntityAdapter<Policyholder>({
 export const getPolicyholders = createAsyncThunk(
   'policyholders/getPolicyholders',
   async () => {
-    const response = await axios.get(`${SURE_API}/policyholders`);
-    return response.data.policyHolders;
+    try {
+      const response = await axios.get(`${SURE_API}/policyholders`);
+      return response.data.policyHolders;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      throw axiosError.response?.data;
+    }
   }
 );
 
 export const createPolicyholder = createAsyncThunk(
   'policyholders/createPolicyholder',
   async (payload: Policyholder) => {
-    const response = await axios.post(
-      `${SURE_API}/policyholders`,
-      payload
-    );
-
-    return response.data.policyHolders;
+    try {
+      const response = await axios.post(`${SURE_API}/policyholders`, payload);
+      return response.data.policyHolders;
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      throw axiosError.response?.data;
+    }
   }
 );
 
@@ -56,22 +68,39 @@ export const policyholdersSlice = createSlice({
     // GET
     builder.addCase(getPolicyholders.pending, (state) => {
       state.status = 'loading';
+      state.hasError = false;
+    });
+    builder.addCase(getPolicyholders.rejected, (state, action) => {
+      if (action.error) {
+        state.status = 'failed';
+        state.hasError = true;
+        state.errorMessage = action.error.message || 'Unexpected Error';
+      }
     });
     builder.addCase(getPolicyholders.fulfilled, (state, action) => {
       state.status = 'idle';
 
       if (action.payload) {
         policyholdersAdapter.setAll(state, action.payload);
+        state.hasError = false;
+        state.errorMessage = '';
       }
     });
 
     // POST
     builder.addCase(createPolicyholder.pending, (state) => {
       state.status = 'loading';
+      state.hasError = false;
+    });
+    builder.addCase(createPolicyholder.rejected, (state, action) => {
+      if (action.error) {
+        state.status = 'failed';
+        state.hasError = true;
+        state.errorMessage = action.error.message || 'Unexpected Error';
+      }
     });
     builder.addCase(createPolicyholder.fulfilled, (state, action) => {
       state.status = 'idle';
-
       /**
        * This is not ideal since in prod
        * Implemented this way since we know that index 1
@@ -79,6 +108,8 @@ export const policyholdersSlice = createSlice({
        */
       if (action.payload) {
         policyholdersAdapter.upsertOne(state, action.payload[1]);
+        state.hasError = false;
+        state.errorMessage = '';
       }
     });
   },

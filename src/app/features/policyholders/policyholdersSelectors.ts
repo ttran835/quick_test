@@ -27,6 +27,8 @@ const policyholdersSelectors = policyholdersAdapter.getSelectors<RootState>(
   (state) => state.policyholders
 );
 
+const selectPolicyholders = (state: RootState) => state.policyholders;
+
 export const selectAllTransformedPolicyholders = createSelector(
   policyholdersSelectors.selectEntities,
   (policyholdersEntites) =>
@@ -34,4 +36,9 @@ export const selectAllTransformedPolicyholders = createSelector(
       entityId,
       value: transformRowValue(policyholdersEntites[entityId] as Policyholder),
     }))
+);
+
+export const selectPolicyholderErrors = createSelector(
+  selectPolicyholders,
+  ({ hasError, errorMessage }) => ({ hasError, errorMessage })
 );
