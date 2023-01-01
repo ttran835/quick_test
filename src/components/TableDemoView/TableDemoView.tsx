@@ -10,7 +10,7 @@ const testRows = Array(15)
 
 function TableDemoView() {
   return (
-    <Box sx={{ textAlign: 'center' }}>
+    <Box sx={{ textAlign: 'center' }} flex={1} flexDirection={'column'}>
       <InfoTable header="Test Table" rows={testRows} />
     </Box>
   );

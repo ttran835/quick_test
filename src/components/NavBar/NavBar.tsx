@@ -1,5 +1,6 @@
 import { Link, Box } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { useState } from 'react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 type TNavBar = {
   links: {
     text: string;
@@ -8,7 +9,15 @@ type TNavBar = {
   }[];
 };
 
+const activeLinkStyle = {
+  fontWeight: 700,
+  textDecoration: 'underline',
+};
+
 function NavBar({ links }: TNavBar) {
+  const { pathname } = useLocation();
+  const [currentLink, setCurrentLink] = useState(pathname);
+
   return (
     <Box
       component="aside"
@@ -23,6 +32,7 @@ function NavBar({ links }: TNavBar) {
     >
       <Link
         component={RouterLink}
+        onClick={() => setCurrentLink('/')}
         to="/"
         sx={{ cursor: 'pointer', marginBottom: '80px', marginTop: '40px' }}
       >
@@ -31,11 +41,14 @@ function NavBar({ links }: TNavBar) {
 
       {links.map(({ text, href, 'data-testid': dataTestId }) => (
         <Link
+          aria-current={currentLink === href ? 'page' : undefined}
           component={RouterLink}
+          onClick={() => setCurrentLink(href)}
           key={href}
           to={href}
           color="#fff"
           underline="hover"
+          style={currentLink === href ? activeLinkStyle : undefined}
           sx={{
             cursor: 'pointer',
             '&:not(:last-of-type)': {
