@@ -50,7 +50,7 @@ const instructions = [
     label: challenge8,
   },
   {
-    title: "9. List remaining to-do's before release",
+    title: "9. List remaining to-do's before release \u2713",
     label: challenge9,
   },
 ];
